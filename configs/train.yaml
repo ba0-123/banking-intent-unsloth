@@ -1,0 +1,36 @@
+# configs/train.yaml
+# ──────────────────────────────────────────────────────────────────────────────
+# Cấu hình Fine-tuning LLaMA-3.2-1B trên BANKING77
+# Tối ưu cho Google Colab Free (T4 16GB VRAM)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Dữ liệu ──────────────────────────────────────────────────────────────────
+data_dir: "sample_data"       # thư mục chứa train.csv, test.csv, label_map.json
+output_dir: "outputs/llama32-banking77"
+
+# ── Tiền xử lý (dùng bởi preprocess_data.py) ─────────────────────────────────
+output_data_dir: "sample_data"
+test_size: 0.15               # 15% dữ liệu dùng để test
+random_seed: 42
+max_per_intent: null          # null = dùng toàn bộ (~150 mẫu/intent)
+
+# ── Model ─────────────────────────────────────────────────────────────────────
+model_name: "unsloth/Llama-3.2-1B-Instruct"
+max_seq_length: 256           # tối đa 256 token (câu banking ngắn)
+load_in_4bit: true            # 4-bit quantization → tiết kiệm VRAM
+
+# ── LoRA Hyperparameters ──────────────────────────────────────────────────────
+lora_r: 16                    # rank của ma trận LoRA (16 = cân bằng)
+lora_alpha: 16                # scaling factor (= r để stable)
+lora_dropout: 0.05            # regularization
+
+# ── Training Hyperparameters ──────────────────────────────────────────────────
+num_epochs: 3                 # 3 epoch đủ cho dataset này
+batch_size: 8                 # per_device_train_batch_size
+gradient_accumulation_steps: 4  # effective batch = 8 × 4 = 32
+learning_rate: 2.0e-4         # learning rate (AdamW 8-bit)
+warmup_ratio: 0.1             # 10% steps để warm up LR
+weight_decay: 0.01            # L2 regularization
+
+# ── Đánh giá ─────────────────────────────────────────────────────────────────
+run_eval: true                # chạy evaluation sau khi train xong

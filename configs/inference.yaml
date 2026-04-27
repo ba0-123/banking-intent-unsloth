@@ -1,0 +1,19 @@
+# configs/inference.yaml
+# ──────────────────────────────────────────────────────────────────────────────
+# Cấu hình Inference cho mô hình Intent Classification
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Đường dẫn tới checkpoint đã lưu sau training
+# (thay đổi nếu bạn lưu ở nơi khác, ví dụ Google Drive)
+checkpoint_dir: "outputs/llama32-banking77/checkpoint-final"
+
+# Label map (mặc định nằm trong checkpoint_dir)
+label_map_path: "outputs/llama32-banking77/checkpoint-final/label_map.json"
+
+# Model settings
+load_in_4bit: true
+max_seq_length: 256
+
+# Generation settings
+max_new_tokens: 20    # intent label ngắn, 20 token là đủ
+temperature: 0.01     # gần như greedy decoding
