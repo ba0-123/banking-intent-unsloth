@@ -36,9 +36,9 @@ def main(config_path: str):
 
     os.makedirs(output_dir, exist_ok=True)
 
-    print("📥 Đang tải BANKING77 từ CSV...")
+    print("Đang tải BANKING77 từ CSV...")
 
-    # ✅ Load từ CSV (thay vì HF)
+    # Load từ CSV (thay vì HF)
     data_files_urls = {
         "train": "https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/train.csv",
         "test":  "https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/test.csv"
@@ -50,16 +50,16 @@ def main(config_path: str):
     # Gộp lại
     df_all = pd.concat([df_train_raw, df_test_raw], ignore_index=True)
 
-    # ✅ category chính là intent
+    # category chính là intent
     df_all["intent"] = df_all["category"]
 
-    print(f"✅ Tổng số mẫu: {len(df_all)}")
-    print(f"✅ Số intents: {df_all['intent'].nunique()}")
+    print(f"Tổng số mẫu: {len(df_all)}")
+    print(f"Số intents: {df_all['intent'].nunique()}")
 
     # Chuẩn hoá text
     df_all["text"] = df_all["text"].apply(normalize_text)
 
-    # ✅ Lấy label_names từ data (THIẾU ở code cũ)
+    # Lấy label_names từ data (THIẾU ở code cũ)
     label_names = sorted(df_all["intent"].unique().tolist())
 
     # Mapping
@@ -75,7 +75,7 @@ def main(config_path: str):
             .apply(lambda g: g.sample(min(len(g), max_per_intent), random_state=random_seed))
             .reset_index(drop=True)
         )
-        print(f"📊 Sau khi sampling: {len(df_all)} mẫu")
+        print(f"Sau khi sampling: {len(df_all)} mẫu")
 
     # Split train/test
     df_train, df_test = train_test_split(
@@ -100,7 +100,7 @@ def main(config_path: str):
             indent=2
         )
 
-    print("💾 Saved:")
+    print("Saved:")
     print(f"   train.csv : {len(df_train)} samples")
     print(f"   test.csv  : {len(df_test)} samples")
     print(f"   label_map.json : {len(label_names)} intents")

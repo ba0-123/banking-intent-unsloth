@@ -92,7 +92,7 @@ def evaluate_model(model, tokenizer, df_test: pd.DataFrame, label2id: dict, id2l
             print(f"  {i+1}/{len(df_test)} done...")
 
     acc = accuracy_score(labels, preds)
-    print(f"\n✅ Test Accuracy: {acc:.4f} ({acc*100:.2f}%)")
+    print(f"\nTest Accuracy: {acc:.4f} ({acc*100:.2f}%)")
     return acc, preds, labels
 
 
@@ -126,10 +126,10 @@ def main(config_path: str):
     label2id: dict = label_map["label2id"]
     id2label: dict = {int(k): v for k, v in label_map["id2label"].items()}
     num_labels = len(label2id)
-    print(f"📌 Số intents: {num_labels}")
+    print(f"Số intents: {num_labels}")
 
     # ── Load model + tokenizer (Unsloth) ────────────────────────────────────
-    print(f"\n🚀 Tải model: {model_name}")
+    print(f"\nTải model: {model_name}")
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=model_name,
         max_seq_length=max_seq_length,
@@ -156,7 +156,7 @@ def main(config_path: str):
     # ── Load data ────────────────────────────────────────────────────────────
     df_train = pd.read_csv(os.path.join(data_dir, "train.csv"))
     df_test  = pd.read_csv(os.path.join(data_dir, "test.csv"))
-    print(f"📊 Train: {len(df_train)} | Test: {len(df_test)}")
+    print(f"Train: {len(df_train)} | Test: {len(df_test)}")
 
     train_dataset = preprocess_dataset(df_train)
 
@@ -194,9 +194,9 @@ def main(config_path: str):
     )
 
     # ── Train ────────────────────────────────────────────────────────────────
-    print("\n🏋️  Bắt đầu training...")
+    print("\nBắt đầu training...")
     trainer_stats = trainer.train()
-    print(f"\n✅ Training hoàn tất!")
+    print(f"\nTraining hoàn tất!")
     print(f"   Time: {trainer_stats.metrics['train_runtime']:.1f}s")
     print(f"   Loss: {trainer_stats.metrics['train_loss']:.4f}")
 
@@ -204,7 +204,7 @@ def main(config_path: str):
     checkpoint_dir = os.path.join(output_dir, "checkpoint-final")
     model.save_pretrained(checkpoint_dir)
     tokenizer.save_pretrained(checkpoint_dir)
-    print(f"\n💾 Checkpoint lưu tại: {checkpoint_dir}")
+    print(f"\nCheckpoint lưu tại: {checkpoint_dir}")
 
     # Lưu label map vào checkpoint
     import shutil
@@ -227,7 +227,7 @@ def main(config_path: str):
         with open(os.path.join(output_dir, "eval_results.txt"), "w") as f:
             f.write(f"Test Accuracy: {acc:.4f}\n\n")
             f.write(report)
-        print(f"\n📄 Kết quả đã lưu: {output_dir}/eval_results.txt")
+        print(f"\nKết quả đã lưu: {output_dir}/eval_results.txt")
 
 
 if __name__ == "__main__":

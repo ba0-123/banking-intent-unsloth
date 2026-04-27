@@ -1,4 +1,4 @@
-# 🏦 Banking Intent Classification with Unsloth
+# Banking Intent Classification with Unsloth
 
 Fine-tuning **LLaMA-3.2-1B-Instruct** trên dataset **BANKING77** (77 intents) sử dụng **Unsloth** + LoRA.
 
@@ -6,7 +6,7 @@ Fine-tuning **LLaMA-3.2-1B-Instruct** trên dataset **BANKING77** (77 intents) s
 
 ---
 
-## 📁 Cấu trúc thư mục
+## Cấu trúc thư mục
 
 ```
 banking-intent-unsloth/
@@ -21,15 +21,13 @@ banking-intent-unsloth/
 │   ├── train.csv
 │   ├── test.csv
 │   └── label_map.json
-├── train.sh
-├── inference.sh
-├── requirements.txt
+│
 └── README.md
 ```
 
 ---
 
-## ⚙️ Cài đặt môi trường (Google Colab)
+## Cài đặt môi trường (Google Colab)
 
 ### Bước 1 — Cài Unsloth (bắt buộc chạy đầu tiên)
 
@@ -40,33 +38,20 @@ import torch
 cuda_version = torch.version.cuda.replace(".", "")
 
 # Cài Unsloth phù hợp với CUDA version
-!pip install --no-deps "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
-!pip install --no-deps "xformers<0.0.27" "trl<0.9.0" peft accelerate bitsandbytes
+!pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git" --quiet
+!pip install --no-deps "xformers<0.0.29" peft accelerate bitsandbytes --quiet
+!pip install datasets transformers scikit-learn pandas PyYAML --quiet
 ```
 
 ### Bước 2 — Clone repo
 
 ```bash
-!git clone https://github.com/<your-username>/banking-intent-unsloth.git
+!git clone https://github.com/ba0-123/banking-intent-unsloth.git
 %cd banking-intent-unsloth
+!ls -la
 ```
 
-### Bước 3 — Cài các thư viện còn lại
-
-```bash
-!pip install -r requirements.txt
-```
-
----
-
-## 🚀 Chạy toàn bộ pipeline
-
-```bash
-# Tiền xử lý + Training (chạy cả 2)
-!bash train.sh
-```
-
-Hoặc chạy từng bước:
+### Bước 3 — Chạy scripts
 
 ```bash
 # Bước 1: Tiền xử lý dữ liệu
@@ -78,7 +63,7 @@ Hoặc chạy từng bước:
 
 ---
 
-## 🔍 Inference
+## Inference
 
 ### Dùng script
 
@@ -113,7 +98,7 @@ print(classifier("I want to cancel my transaction"))
 
 ---
 
-## 📊 Hyperparameters
+## Hyperparameters
 
 | Tham số | Giá trị | Ghi chú |
 |---|---|---|
@@ -133,7 +118,7 @@ print(classifier("I want to cancel my transaction"))
 
 ---
 
-## 📈 Dataset
+## Dataset
 
 - **BANKING77**: 13,083 câu hỏi khách hàng ngân hàng, 77 intents
 - **Train**: ~11,120 mẫu (85%)
@@ -152,29 +137,22 @@ print(classifier("I want to cancel my transaction"))
 
 ---
 
-## 🎬 Video Demo
+## Video Demo
 
-📹 [Xem video demo tại đây](https://drive.google.com/...)
+[Xem video demo tại đây](https://drive.google.com/...)
 
 > Video demo bao gồm: chạy inference script, ví dụ input/output, và accuracy trên test set.
 
 ---
 
-## 📝 Kết quả
+## Kết quả
 
 Sau khi training, kết quả được lưu tại `outputs/llama32-banking77/eval_results.txt`.
 
-| Metric | Giá trị |
-|---|---|
-| Test Accuracy | ~85%+ (dự kiến) |
-| Số intents | 77 |
-| Model size | ~1B params (4-bit) |
-
 ---
 
-## 👨‍💻 Tác giả
+## Tác giả
 
-- **Sinh viên**: [Tên của bạn]
-- **MSSV**: [MSSV]
-- **Lớp**: [Tên lớp]
+- **Sinh viên**: Nguyễn Quốc Bảo
+- **MSSV**: 23127329
 - **Giảng viên**: Dr. Nguyen Hong Buu Long

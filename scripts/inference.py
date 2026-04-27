@@ -58,7 +58,7 @@ class IntentClassification:
         )
         FastLanguageModel.for_inference(self.model)
         self.model.eval()
-        print("[IntentClassification] ✅ Model đã sẵn sàng!")
+        print("[IntentClassification] Model đã sẵn sàng!")
 
     def _build_prompt(self, message: str) -> str:
         return (
@@ -146,7 +146,7 @@ if __name__ == "__main__":
         print(f"Intent : {label}")
     else:
         # Interactive mode
-        print("\n💬 Interactive Mode - nhập 'quit' để thoát\n")
+        print("\nInteractive Mode - nhập 'quit' để thoát\n")
         while True:
             msg = input("Message: ").strip()
             if msg.lower() in ("quit", "exit", "q"):
