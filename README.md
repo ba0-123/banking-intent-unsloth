@@ -137,14 +137,6 @@ print(classifier("I want to cancel my transaction"))
 
 ---
 
-## Video Demo
-
-[Xem video demo tại đây](https://drive.google.com/...)
-
-> Video demo bao gồm: chạy inference script, ví dụ input/output, và accuracy trên test set.
-
----
-
 ## Kết quả
 
 Sau khi training, kết quả được lưu tại `outputs/llama32-banking77/eval_results.txt`.
